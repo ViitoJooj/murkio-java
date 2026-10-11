@@ -81,3 +81,13 @@ requests (CSRF). `loadUser()` reads `POST /v1/me` (cached a minute); `checkRevoc
 asks the API whether the session was revoked (cached 30 s). A page request with an
 expired cookie gets a short handshake page that refreshes it. The backend never signs
 anyone in: the browser does. One `Murkio` is thread-safe; share it.
+
+## Developing
+
+This repository is a git submodule of the Murkio identity service
+(`libs/external/java`). The tests run from that checkout: they read the token vectors
+every Murkio server SDK shares (`libs/spec/server`).
+
+```sh
+mvn -B test
+```
