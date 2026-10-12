@@ -6,7 +6,7 @@ package com.murkio.identity;
 public final class Cdn {
     public static final String VERSION = "0.1.0";
     public static final String URL = "https://cdn.jsdelivr.net/npm/@murkio/html@0.1.0/dist/murkio.js";
-    public static final String INTEGRITY = "sha384-c1uw6fHl7lO2UKbhw6gSkHmvLuJTh9DD3fAzRYZnHSUwhMuN5I8H2BnyGrYlnoMa";
+    public static final String INTEGRITY = "sha384-0Ix1nf5S3FTokvbSK46OUqNd1tlXmYzC51h0Rr3aOpCUz/+GLp+yy28iG1aFuSCi";
 
     private Cdn() {}
 }
