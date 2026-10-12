@@ -14,8 +14,7 @@ public final class Options {
     boolean loadUser;
     boolean checkRevocation;
 
-    private Options() {
-    }
+    private Options() {}
 
     public static Options of() {
         return new Options();

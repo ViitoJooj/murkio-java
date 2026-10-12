@@ -33,7 +33,10 @@ final class FakeApi implements Transport {
         byte[] encoded = pair.getPublic().getEncoded();
         byte[] raw = new byte[32];
         System.arraycopy(encoded, encoded.length - 32, raw, 0, 32);
-        this.jwks = jwks != null ? jwks : "{\"keys\":[{\"kty\":\"OKP\",\"crv\":\"Ed25519\",\"kid\":\"k1\",\"alg\":\"EdDSA\",\"x\":\"" + b64(raw) + "\"}]}";
+        this.jwks = jwks != null
+                ? jwks
+                : "{\"keys\":[{\"kty\":\"OKP\",\"crv\":\"Ed25519\",\"kid\":\"k1\",\"alg\":\"EdDSA\",\"x\":\"" + b64(raw)
+                        + "\"}]}";
         this.application = application;
         this.issuer = issuer;
     }
@@ -51,13 +54,17 @@ final class FakeApi implements Transport {
                 if (!("Bearer " + KEY).equals(headers.get("Authorization"))) {
                     return new Result(401, "{\"details\":[{\"code\":\"bss-01\"}]}");
                 }
-                return new Result(200, "{\"data\":{\"application_id\":\"" + application + "\",\"issuer\":\"" + issuer
-                        + "\",\"jwks_url\":\"/jwks.json\",\"config\":{},\"canvas\":{\"version\":0,\"document\":{\"note\":\"</script><b>&\\u2028\"}}}}");
+                return new Result(
+                        200,
+                        "{\"data\":{\"application_id\":\"" + application + "\",\"issuer\":\"" + issuer
+                                + "\",\"jwks_url\":\"/jwks.json\",\"config\":{},\"canvas\":{\"version\":0,\"document\":{\"note\":\"</script><b>&\\u2028\"}}}}");
             case "/jwks.json":
                 return new Result(200, jwks);
             case "/v1/me":
-                return new Result(200, "{\"data\":{\"id\":\"user-1\",\"session_id\":\"session-1\",\"email\":\"ana@example.com\",\"email_verified\":true,"
-                        + "\"roles\":[\"user\"],\"mfa_enabled\":false,\"created_at\":\"2026-10-10T00:00:00Z\"}}");
+                return new Result(
+                        200,
+                        "{\"data\":{\"id\":\"user-1\",\"session_id\":\"session-1\",\"email\":\"ana@example.com\",\"email_verified\":true,"
+                                + "\"roles\":[\"user\"],\"mfa_enabled\":false,\"created_at\":\"2026-10-10T00:00:00Z\"}}");
             case "/v1/sessions/verify":
                 String token = String.valueOf(Json.parseObject(body).get("access_token"));
                 return new Result(200, "{\"data\":{\"active\":" + !revoked.contains(token) + "}}");
@@ -92,6 +99,10 @@ final class FakeApi implements Transport {
     }
 
     Murkio client() {
-        return Murkio.builder().publishableKey(KEY).apiUrl("https://api.example.com").transport(this).build();
+        return Murkio.builder()
+                .publishableKey(KEY)
+                .apiUrl("https://api.example.com")
+                .transport(this)
+                .build();
     }
 }

@@ -84,10 +84,24 @@ anyone in: the browser does. One `Murkio` is thread-safe; share it.
 
 ## Developing
 
-This repository is a git submodule of the Murkio identity service
-(`libs/external/java`). The tests run from that checkout: they read the token vectors
-every Murkio server SDK shares (`libs/spec/server`).
-
 ```sh
 mvn -B test
 ```
+
+The tests read the token vectors every Murkio server SDK shares. That copy (`spec/`) and
+the checks in `infra/pipeline/` are kept in the Murkio identity service and synced from
+there, so they are not edited here.
+
+Every pull request runs the workflows in `.github/workflows`. The same checks, locally:
+
+| Workflow | What it runs |
+| --- | --- |
+| Build | `mvn -DskipTests package` (every compiler warning is an error) on Java 17 and 25 |
+| Format | `mvn spotless:check` (`mvn spotless:apply` fixes; needs JDK 21 or newer) |
+| Lint | `mvn -DskipTests test-compile`, `mvn -DskipTests javadoc:javadoc` |
+| Tests | `mvn test` on Java 17 and 25 |
+| Quality & Governance Checks | `for check in infra/pipeline/*.py; do python3 "$check"; done` |
+| Security | `mvn -DskipTests compile spotbugs:check` (SpotBugs with Find Security Bugs), `gitleaks git .`, `zizmor --pedantic .` |
+| CodeQL, Dependency Review | run by GitHub on the pull request |
+
+Security reports: see [SECURITY.md](SECURITY.md).
