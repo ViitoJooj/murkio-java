@@ -7,8 +7,7 @@ import java.util.Map;
 public interface Transport {
 
     /** The status and body of an HTTP answer. */
-    record Result(int status, String body) {
-    }
+    record Result(int status, String body) {}
 
     Result send(String method, String url, Map<String, String> headers, String body) throws Exception;
 }

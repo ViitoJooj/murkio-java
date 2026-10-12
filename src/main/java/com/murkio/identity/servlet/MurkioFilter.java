@@ -63,11 +63,18 @@ public final class MurkioFilter implements Filter {
         }
         String query = request.getQueryString();
         String path = request.getRequestURI() + (query == null || query.isEmpty() ? "" : "?" + query);
-        return new Request(request.getMethod(), request.getScheme(), host, path, headers, Request.parseCookies(request.getHeader("Cookie")));
+        return new Request(
+                request.getMethod(),
+                request.getScheme(),
+                host,
+                path,
+                headers,
+                Request.parseCookies(request.getHeader("Cookie")));
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
         if (!(request instanceof HttpServletRequest http) || !(response instanceof HttpServletResponse answer)) {
             chain.doFilter(request, response);
             return;

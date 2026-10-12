@@ -8,7 +8,13 @@ import java.util.Map;
  * What the SDK reads from an HTTP request. Header names are looked up without
  * case; {@code path} carries the query string.
  */
-public record Request(String method, String scheme, String host, String path, Map<String, String> headers, Map<String, String> cookies) {
+public record Request(
+        String method,
+        String scheme,
+        String host,
+        String path,
+        Map<String, String> headers,
+        Map<String, String> cookies) {
 
     public Request {
         Map<String, String> lower = new LinkedHashMap<>();

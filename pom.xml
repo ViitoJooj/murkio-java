@@ -51,6 +51,50 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
       </plugin>
+      <!-- mvn spotless:check (the Format workflow) and spotless:apply. Needs JDK 21 or newer to run. -->
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>3.10.4</version>
+        <configuration>
+          <java>
+            <palantirJavaFormat>
+              <version>2.102.0</version>
+            </palantirJavaFormat>
+            <removeUnusedImports/>
+            <importOrder/>
+          </java>
+        </configuration>
+      </plugin>
+      <!-- mvn compile spotbugs:check (the Security workflow): bug patterns plus the security detectors of Find Security Bugs. -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.10.4.1</version>
+        <configuration>
+          <effort>Max</effort>
+          <threshold>Low</threshold>
+          <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
+          <plugins>
+            <plugin>
+              <groupId>com.h3xstream.findsecbugs</groupId>
+              <artifactId>findsecbugs-plugin</artifactId>
+              <version>1.14.0</version>
+            </plugin>
+          </plugins>
+        </configuration>
+      </plugin>
+      <!-- mvn javadoc:javadoc (the Lint workflow): the documentation of the public API must be well formed. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.12.0</version>
+        <configuration>
+          <doclint>all,-missing</doclint>
+          <failOnWarnings>true</failOnWarnings>
+          <quiet>true</quiet>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>

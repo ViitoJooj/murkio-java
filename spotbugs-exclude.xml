@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- What SpotBugs and Find Security Bugs report and is how the SDK is meant to
+     work. Every other finding fails the Security workflow. -->
+<FindBugsFilter xmlns="https://github.com/spotbugs/filter/3.0.0">
+  <!-- The filter exists to read the request: its headers, host and query are
+       handed to the verifier, which trusts none of them (the session comes
+       from a signed token, and a cookie is accepted only with a matching
+       origin). -->
+  <Match>
+    <Class name="com.murkio.identity.servlet.MurkioFilter"/>
+    <Bug pattern="SERVLET_HEADER,SERVLET_QUERY_STRING,SERVLET_SERVER_NAME"/>
+  </Match>
+  <!-- Only protocol tokens are compared without case (the HTTP method, a
+       header name): they are ASCII, where case mapping has no surprises. -->
+  <Match>
+    <Bug pattern="IMPROPER_UNICODE"/>
+  </Match>
+  <!-- The SDK reports a failure with its own unchecked exceptions
+       (ApiException, TokenException), and a Transport written by the
+       application may fail with anything. -->
+  <Match>
+    <Bug pattern="THROWS_METHOD_THROWS_RUNTIMEEXCEPTION,THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION"/>
+  </Match>
+</FindBugsFilter>
