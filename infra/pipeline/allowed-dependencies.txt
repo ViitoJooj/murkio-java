@@ -1,0 +1,5 @@
+# The runtime dependencies this SDK ships with, one per line, each with the
+# reason it is needed. infra/pipeline/verify_dependencies.py fails when the
+# manifest and this list disagree.
+
+jakarta.servlet:jakarta.servlet-api # only for MurkioFilter; optional and provided by the servlet container, never bundled
